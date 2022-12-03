@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     let lines = lib::read_input("input.txt");
 
@@ -8,77 +10,42 @@ fn main() {
     std::println!("Part 2: {}", part_2);
 }
 
-fn part_1(input: &[String]) -> i32 {
-    let mut score = 0;
-    for line in input {
-        let v: Vec<&str> = line.split(' ').collect();
+fn part_1(input: &[String]) -> u32 {
+    let score_map = HashMap::from([
+        ("A X", 4),
+        ("A Y", 8),
+        ("A Z", 3),
+        ("B X", 1),
+        ("B Y", 5),
+        ("B Z", 9),
+        ("C X", 7),
+        ("C Y", 2),
+        ("C Z", 6),
+    ]);
 
-        score += calculate_score(v[0], v[1]);
-    }
-
-    score
+    input
+        .iter()
+        .map(|line| score_map.get(line as &str).unwrap())
+        .sum()
 }
 
-fn part_2(input: &[String]) -> i32 {
-    let mut score = 0;
+fn part_2(input: &[String]) -> u32 {
+    let score_map = HashMap::from([
+        ("A X", 3),
+        ("A Y", 4),
+        ("A Z", 8),
+        ("B X", 1),
+        ("B Y", 5),
+        ("B Z", 9),
+        ("C X", 2),
+        ("C Y", 6),
+        ("C Z", 7),
+    ]);
 
-    for line in input {
-        let v: Vec<&str> = line.split(' ').collect();
-        let opp = v[0];
-        let outcome = v[1];
-
-        let you: &str = match opp {
-            "A" => match outcome {
-                "X" => "Z",
-                "Y" => "X",
-                "Z" => "Y",
-                &_ => panic!("Invalid outcome"),
-            },
-            "B" => match outcome {
-                "X" => "X",
-                "Y" => "Y",
-                "Z" => "Z",
-                &_ => panic!("Invalid outcome"),
-            },
-            "C" => match outcome {
-                "X" => "Y",
-                "Y" => "Z",
-                "Z" => "X",
-                &_ => panic!("Invalid outcome"),
-            },
-            &_ => panic!("Invalid opponent"),
-        };
-
-        let temp_score = calculate_score(opp, you);
-        std::println!("{}", temp_score);
-        score += calculate_score(opp, you);
-    }
-
-    score
-}
-
-fn calculate_score(opp: &str, you: &str) -> i32 {
-    match opp {
-        "A" => match you {
-            "X" => 4,
-            "Y" => 8,
-            "Z" => 3,
-            &_ => panic!("Invalid input"),
-        },
-        "B" => match you {
-            "X" => 1,
-            "Y" => 5,
-            "Z" => 9,
-            &_ => panic!("Invalid input"),
-        },
-        "C" => match you {
-            "X" => 7,
-            "Y" => 2,
-            "Z" => 6,
-            &_ => panic!("Invalid input"),
-        },
-        &_ => panic!("Invalid input"),
-    }
+    input
+        .iter()
+        .map(|line| score_map.get(line as &str).unwrap())
+        .sum()
 }
 
 #[cfg(test)]
