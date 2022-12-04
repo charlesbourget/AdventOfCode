@@ -3,12 +3,5 @@
 version = 3
 
 [[package]]
-name = "day01"
-version = "0.1.0"
-dependencies = [
- "lib",
-]
-
-[[package]]
-name = "lib"
+name = "aoc2022"
 version = "0.1.0"
