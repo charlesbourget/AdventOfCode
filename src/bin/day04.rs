@@ -1,5 +1,10 @@
-use aoc2022::read_input;
+use std::num::ParseIntError;
+use std::str::FromStr;
 
+use aoc2022::read_input;
+use aoc2022::split_into_tuple;
+
+#[derive(Debug)]
 struct Assignement {
     lower: u32,
     upper: u32,
@@ -21,9 +26,7 @@ fn part_1(input: &[String]) -> u32 {
     for line in input.iter() {
         let (elf1, elf2) = parse_assignements(line);
 
-        if (elf1.lower <= elf2.lower && elf1.upper >= elf2.upper)
-            || (elf2.lower <= elf1.lower && elf2.upper >= elf1.upper)
-        {
+        if elf1.contains(&elf2) {
             count += 1;
         }
     }
@@ -37,11 +40,7 @@ fn part_2(input: &[String]) -> u32 {
     for line in input.iter() {
         let (elf1, elf2) = parse_assignements(line);
 
-        if (elf1.lower <= elf2.lower && elf1.upper >= elf2.lower)
-            || (elf1.lower <= elf2.upper && elf1.upper >= elf2.upper)
-            || (elf2.lower <= elf1.lower && elf2.upper >= elf1.lower)
-            || (elf2.lower <= elf1.upper && elf2.upper >= elf1.upper)
-        {
+        if elf1.overlaps(&elf2) {
             count += 1;
         }
     }
@@ -49,23 +48,35 @@ fn part_2(input: &[String]) -> u32 {
     count
 }
 
-fn parse_assignements(line: &str) -> (Assignement, Assignement) {
-    let mut assignements = line.split(',');
-    let elf1 = calculate_section_bounds(assignements.next().unwrap());
-    let elf2 = calculate_section_bounds(assignements.next().unwrap());
+impl FromStr for Assignement {
+    type Err = ParseIntError;
 
-    (elf1, elf2)
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (lower_bound, upper_bound) = split_into_tuple(s, '-');
+
+        Ok(Self {
+            lower: lower_bound,
+            upper: upper_bound,
+        })
+    }
 }
 
-fn calculate_section_bounds(assignement: &str) -> Assignement {
-    let mut bounds = assignement.split('-');
-    let lower_bound = bounds.next().unwrap().parse::<u32>().unwrap();
-    let upper_bound = bounds.next().unwrap().parse::<u32>().unwrap();
-
-    Assignement {
-        lower: lower_bound,
-        upper: upper_bound,
+impl Assignement {
+    fn overlaps(&self, other: &Assignement) -> bool {
+        (self.lower <= other.lower && self.upper >= other.lower)
+            || (self.lower <= other.upper && self.upper >= other.upper)
+            || (other.lower <= self.lower && other.upper >= self.lower)
+            || (other.lower <= self.upper && other.upper >= self.upper)
     }
+
+    fn contains(&self, other: &Assignement) -> bool {
+        (self.lower <= other.lower && self.upper >= other.upper)
+            || (other.lower <= self.lower && other.upper >= self.upper)
+    }
+}
+
+fn parse_assignements(line: &str) -> (Assignement, Assignement) {
+    split_into_tuple(line, ',')
 }
 
 #[cfg(test)]
