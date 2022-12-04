@@ -1,7 +1,7 @@
-use std::io::BufReader;
 use std::fs::File;
-use std::path::Path;
 use std::io::BufRead;
+use std::io::BufReader;
+use std::path::Path;
 
 pub fn read_input(filename: impl AsRef<Path>) -> Vec<String> {
     let file = File::open(filename).expect("no such file");

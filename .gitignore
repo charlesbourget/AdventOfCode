@@ -15,10 +15,5 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/rust
 
-**/bin
-**/input*
-
-
-# Added by cargo
-
-/target
+scripts/bin
+inputs
