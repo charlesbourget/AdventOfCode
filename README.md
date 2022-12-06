@@ -7,7 +7,7 @@ My solutions for AOC 2022.
 
 You will need:
 - cargo
-- rust (2021 edition)
+- rust (latest stable)
   
 To execute a specific day:
  
