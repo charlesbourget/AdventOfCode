@@ -60,18 +60,15 @@ fn parse_stacks(input: &[String], num_stacks: u32) -> (Vec<Vec<char>>, usize) {
         if line.starts_with(" 1") {
             return (stacks, (j + 2) as usize);
         }
+        let char_array: Vec<char> = line.chars().collect();
 
         for column in 0..num_stacks {
-            let start_index = (column * 4) as usize;
-            let end_index = start_index + 3;
-            let data = &line[start_index..end_index]
-                .trim()
-                .replace('[', "")
-                .replace(']', "");
+            let index = (column * 4 + 1) as usize;
+            let data = char_array.get(index).unwrap();
 
-            if !data.is_empty() {
+            if data != &' ' {
                 let stack = stacks.get_mut(column as usize).unwrap();
-                stack.insert(0, data.chars().next().unwrap());
+                stack.insert(0, *data);
             }
         }
     }
