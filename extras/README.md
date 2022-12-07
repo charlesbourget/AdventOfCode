@@ -16,3 +16,10 @@ Python
 ```bash
 python3 day04.py
 ```
+
+## Day 06
+Golfing in python
+
+```bash
+python3 day06.py
+```
