@@ -35,10 +35,10 @@
       (with-open-file (out-stream file :direction :output :if-exists :supersede)
         (loop for line = (read-line in-stream nil)
            while line do
-             (let ((registers (nth-value 1 (cl-ppcre::scan-to-strings "message=(\\d)+" line))))
+             (let ((registers (nth-value 1 (cl-ppcre::scan-to-strings "message=(\\d+)%" line))))
                (if registers
                 (write-line
-                 (cl-ppcre:regex-replace "message=(\\d)+" line (concatenate 'string "message=" (write-to-string (+ (parse-integer (aref registers 0)) 1)))) out-stream)
+                 (cl-ppcre:regex-replace "message=(\\d+)" line (concatenate 'string "message=" (write-to-string (+ (parse-integer (aref registers 0)) 1)))) out-stream)
                 (write-line line  out-stream))))))
     (delete-file backup-file)))
 
