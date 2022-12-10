@@ -76,6 +76,31 @@ func MinMax(values []int) (min int, max int) {
 	return
 }
 
+func MinInt64(values []int64) (min int64) {
+	min, _ = MinMaxInt64(values)
+	return
+}
+
+func MaxInt64(values []int64) (max int64) {
+	_, max = MinMaxInt64(values)
+	return
+}
+
+func MinMaxInt64(values []int64) (min int64, max int64) {
+	min = math.MaxInt64
+	for _, v := range values {
+		if v < min {
+			min = v
+		}
+
+		if v > max {
+			max = v
+		}
+	}
+
+	return
+}
+
 // Seq returns a slice of values between min and max
 func Seq(min int, max int) []int {
 	r := make([]int, 0, max-min+1)
