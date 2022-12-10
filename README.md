@@ -1,5 +1,5 @@
 # ⭐️ Advent of Code 2022 ⭐️
-[![Stars collected](https://shields.io/static/v1?label=stars%20collected&message=14%20⭐&color=blue)]()
+[![Stars collected](https://shields.io/static/v1?label=stars%20collected&message=16%20⭐&color=blue)]()
 
 My solutions for AOC 2022.
 
