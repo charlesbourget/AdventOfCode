@@ -21,7 +21,7 @@ func Part1(input []string) int {
 	computer := &Computer{
 		register:   1,
 		clockCycle: 1,
-		screen:     [6][40]int{},
+		screen:     [6][40]rune{},
 		x:          0,
 		y:          0,
 	}
@@ -34,7 +34,7 @@ func Part2(input []string) string {
 	computer := &Computer{
 		register:   1,
 		clockCycle: 1,
-		screen:     [6][40]int{},
+		screen:     [6][40]rune{},
 		x:          0,
 		y:          0,
 	}
@@ -47,7 +47,7 @@ type Computer struct {
 	clockCycle     int
 	register       int
 	signalStrength int
-	screen         [6][40]int
+	screen         [6][40]rune
 	x              int
 	y              int
 }
@@ -87,9 +87,9 @@ func (c *Computer) drawPixel() {
 	}
 
 	if c.x >= c.register-1 && c.x <= c.register+1 {
-		c.screen[c.y][c.x] = 1
+		c.screen[c.y][c.x] = '#'
 	} else {
-		c.screen[c.y][c.x] = 0
+		c.screen[c.y][c.x] = '.'
 	}
 
 	c.x++
@@ -103,14 +103,11 @@ func (c *Computer) drawPixel() {
 func (c *Computer) printScreen() string {
 	screenOutput := ""
 	for i := 0; i < 6; i++ {
+		line := ""
 		for j := 0; j < 40; j++ {
-			if c.screen[i][j] == 1 {
-				screenOutput += "#"
-			} else {
-				screenOutput += "."
-			}
+			line += string(c.screen[i][j])
 		}
-		screenOutput += "\n"
+		screenOutput += fmt.Sprintf("%s\n", line)
 	}
 
 	return screenOutput
