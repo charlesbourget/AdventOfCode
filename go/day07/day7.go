@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/charlesbourget/aoc2022/lib"
+	lib "github.com/charlesbourget/aoc-lib"
 )
 
 func main() {

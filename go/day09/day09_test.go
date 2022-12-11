@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/charlesbourget/aoc2022/lib"
+	lib "github.com/charlesbourget/aoc-lib"
 )
 
 func TestPart1(t *testing.T) {
 	input, err := lib.Read("../../inputs/day09/input.test")
 	if err != nil {
-		panic(fmt.Errorf("Error while reading input, %s", err))
+		panic(fmt.Errorf("error while reading input, %s", err))
 	}
 
 	var expected int = 13
@@ -23,7 +23,7 @@ func TestPart1(t *testing.T) {
 func TestPart2(t *testing.T) {
 	input, err := lib.Read("../../inputs/day09/input.2.test")
 	if err != nil {
-		panic(fmt.Errorf("Error while reading input, %s", err))
+		panic(fmt.Errorf("error while reading input, %s", err))
 	}
 
 	var expected int = 36
