@@ -10,8 +10,7 @@ import (
 func main() {
 	input, err := lib.Read("../inputs/day07/input.txt")
 	if err != nil {
-		fmt.Println("Error while reading input. ", err)
-		return
+		panic(fmt.Errorf("error while reading input, %s", err))
 	}
 
 	fmt.Printf("Part 1: %d\n", Part1(input))
