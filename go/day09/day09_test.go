@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	lib "github.com/charlesbourget/aoc-lib"
+	"github.com/charlesbourget/aoc-lib/lib"
 )
 
 func TestPart1(t *testing.T) {

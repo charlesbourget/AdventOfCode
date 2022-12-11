@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	lib "github.com/charlesbourget/aoc-lib"
+	"github.com/charlesbourget/aoc-lib/lib"
 )
 
 func main() {
