@@ -1,0 +1,18 @@
+{
+  "name": "aoc2021-scripts",
+  "version": "1.0.0",
+  "repository": "git@github.com:charlesbourget/aoc2021.git",
+  "author": "Charles Bourget <charles.bourget.2@ens.etsmtl.ca>",
+  "license": "MIT",
+  "scripts": {
+    "run-all": "./run-all.mjs",
+    "add-stars": "./add-stars.mjs",
+    "format": "prettier -w *.mjs"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.0"
+  },
+  "dependencies": {
+    "zx": "^4.2.0"
+  }
+}
