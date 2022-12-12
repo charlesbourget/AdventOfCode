@@ -1,0 +1,1 @@
+print(f"Part 1 {[i+4 for i in range(len(open('../inputs/day06/input.txt').read().strip())) if len(set(open('../inputs/day06/input.txt').read().strip()[i:i+4]))==4][0]}\nPart 2 {[i+14 for i in range(len(open('../inputs/day06/input.txt').read().strip())) if len(set(open('../inputs/day06/input.txt').read().strip()[i:i+14]))==14][0]}")

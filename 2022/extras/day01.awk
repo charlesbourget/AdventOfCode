@@ -1,0 +1,2 @@
+#! /usr/bin/awk -f
+{if($1==""){values[i++]=current;current=0;}else{current+=$1;}}END{values[i++]=current;for (j=0;j<i;j++){if(values[j]>max){max3=max2;max2=max;max=values[j];}else if(values[j]>max2){max3=max2;max2=values[j];}else if(values[j]>max3){max3=values[j];}}print"Part 1: "max"\nPart 2: "max3+max2+max;}
