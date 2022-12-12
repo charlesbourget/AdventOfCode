@@ -2,7 +2,7 @@ use aoc2022::read_input;
 use std::collections::HashMap;
 
 fn main() {
-    let lines = read_input("inputs/day02/input.txt");
+    let lines = read_input("../inputs/day02/input.txt");
 
     let part_1 = part_1(&lines);
     std::println!("Part 1: {}", part_1);
@@ -55,7 +55,7 @@ mod tests {
 
     #[test]
     fn part_1_test() {
-        let test_input = read_input("inputs/day02/input.test");
+        let test_input = read_input("../inputs/day02/input.test");
         let expected_result = 15;
 
         let result = part_1(&test_input);
@@ -65,7 +65,7 @@ mod tests {
 
     #[test]
     fn part_2_test() {
-        let test_input = read_input("inputs/day02/input.test");
+        let test_input = read_input("../inputs/day02/input.test");
         let expected_result = 12;
 
         let result = part_2(&test_input);

@@ -11,7 +11,7 @@ struct Assignement {
 }
 
 fn main() {
-    let lines = read_input("inputs/day04/input.txt");
+    let lines = read_input("../inputs/day04/input.txt");
 
     let part_1 = part_1(&lines);
     std::println!("Part 1: {}", part_1);
@@ -85,7 +85,7 @@ mod tests {
 
     #[test]
     fn part_1_test() {
-        let test_input = read_input("inputs/day04/input.test");
+        let test_input = read_input("../inputs/day04/input.test");
         let expected_result = 2;
 
         let result = part_1(&test_input);
@@ -95,7 +95,7 @@ mod tests {
 
     #[test]
     fn part_2_test() {
-        let test_input = read_input("inputs/day04/input.test");
+        let test_input = read_input("../inputs/day04/input.test");
         let expected_result = 4;
 
         let result = part_2(&test_input);
