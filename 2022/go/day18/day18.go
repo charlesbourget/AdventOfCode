@@ -19,11 +19,10 @@ func main() {
 
 func Part1(input []string) int {
 	points := parsePoints(input)
-	emptyBlocks := make(map[Point]int)
 
 	count := 0
 	for p := range points {
-		count += isEmptyNeighbours(p, points, emptyBlocks)
+		count += isEmptyNeighbours(p, points)
 	}
 
 	return count
@@ -58,25 +57,22 @@ func parsePoints(input []string) map[Point]bool {
 	return points
 }
 
-func isEmptyNeighbours(v Point, points map[Point]bool, emptyBlocks map[Point]int) int {
+func isEmptyNeighbours(v Point, points map[Point]bool) int {
 	count := 0
 
 	for i := -1; i <= 1; i += 2 {
 		np := Point{v.x + i, v.y, v.z}
 		if !points[np] {
-			emptyBlocks[np] += 1
 			count++
 		}
 
 		np = Point{v.x, v.y + i, v.z}
 		if !points[np] {
-			emptyBlocks[np] += 1
 			count++
 		}
 
 		np = Point{v.x, v.y, v.z + i}
 		if !points[np] {
-			emptyBlocks[np] += 1
 			count++
 		}
 	}
