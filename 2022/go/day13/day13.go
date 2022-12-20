@@ -9,6 +9,11 @@ import (
 	"github.com/charlesbourget/aoc-lib/lib"
 )
 
+const F_64 = "float64"
+const ANY_LIST = "[]interface {}"
+const DIVIDER_1 = "[[2]]"
+const DIVIDER_2 = "[[6]]"
+
 func main() {
 	input, err := lib.Read("../inputs/day13/input.txt")
 	if err != nil {
@@ -23,14 +28,8 @@ func Part1(input []string) int {
 	result := 0
 	idx := 1
 
-	for i := 0; i < len(input)-2; i += 3 {
-		var list1 []any
-		var list2 []any
-
-		json.Unmarshal([]byte(input[i]), &list1)
-		json.Unmarshal([]byte(input[i+1]), &list2)
-
-		if compare(list1, list2) {
+	for i := 0; i < len(input)-1; i += 3 {
+		if compare(parseLine(input[i]), parseLine(input[i+1])) {
 			result += idx
 		}
 
@@ -44,14 +43,13 @@ func Part2(input []string) int {
 	result := 1
 
 	signals := make([][]any, 0)
+	signals = append(signals, parseLine(DIVIDER_1))
+	signals = append(signals, parseLine(DIVIDER_2))
 
 	for i := 0; i < len(input)-1; i += 3 {
 		signals = append(signals, parseLine(input[i]))
 		signals = append(signals, parseLine(input[i+1]))
 	}
-
-	signals = append(signals, parseLine("[[2]]"))
-	signals = append(signals, parseLine("[[6]]"))
 
 	sort.Slice(signals, func(i, j int) bool {
 		return compare(signals[i], signals[j])
@@ -59,16 +57,13 @@ func Part2(input []string) int {
 
 	for i, v := range signals {
 		s := fmt.Sprint(v)
-		if s == "[[2]]" || s == "[[6]]" {
+		if s == DIVIDER_1 || s == DIVIDER_2 {
 			result *= i + 1
 		}
 	}
 
 	return result
 }
-
-const F_64 = "float64"
-const ANY_LIST = "[]interface {}"
 
 func parseLine(s string) []any {
 	var o []any
