@@ -24,10 +24,10 @@ func Part1(input []string, numStacks int) string {
 		instruction := parseInstruction(input[i])
 
 		for j := 0; j < instruction.number; j++ {
-			newStacks, value := Dequeue(stacks[instruction.from])
+			newStacks, value := lib.DequeueNum(stacks[instruction.from], 1)
 			stacks[instruction.from] = newStacks
 
-			stacks[instruction.to] = append(stacks[instruction.to], value)
+			stacks[instruction.to] = append(stacks[instruction.to], value...)
 		}
 	}
 
@@ -45,7 +45,7 @@ func Part2(input []string, numStacks int) string {
 	for i := startingLine; i < len(input); i++ {
 		instruction := parseInstruction(input[i])
 
-		newStacks, value := DequeueNum(stacks[instruction.from], instruction.number)
+		newStacks, value := lib.DequeueNum(stacks[instruction.from], instruction.number)
 		stacks[instruction.from] = newStacks
 
 		stacks[instruction.to] = append(stacks[instruction.to], value...)
@@ -99,14 +99,4 @@ func parseInstruction(line string) *Instruction {
 	to := lib.ToInt(instructions[5]) - 1
 
 	return &Instruction{number: number, from: from, to: to}
-}
-
-func Dequeue[T any](queue []T) ([]T, T) {
-	v := queue[len(queue)-1]
-	return queue[:len(queue)-1], v
-}
-
-func DequeueNum[T any](queue []T, num int) ([]T, []T) {
-	v := queue[len(queue)-num:]
-	return queue[:len(queue)-num], v
 }
