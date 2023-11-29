@@ -1,12 +1,12 @@
-use std::{io::Write, fs};
+use std::{fs, io::Write};
 
 use anyhow::Result;
 use clap::Args;
 
 use self::template::generate_template;
 
-mod template;
 mod config;
+mod template;
 
 #[derive(Args, Debug)]
 pub struct PrepareCommandOptions {
@@ -43,7 +43,6 @@ pub fn prepare(options: PrepareCommandOptions) -> Result<()> {
 
     Ok(())
 }
-
 
 fn fetch_input(day: u8, session_token: &str) -> Result<String> {
     let url = format!("https://adventofcode.com/2022/day/{}/input", day);

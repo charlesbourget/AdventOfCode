@@ -1,9 +1,9 @@
-use quote::quote;
 use anyhow::Result;
+use quote::quote;
 
 pub fn generate_template(day: &str) -> Result<String> {
-    let input_path =format!("inputs/day{}/input.txt", day);
-    let test_input_path =format!("inputs/day{}/input.test", day);
+    let input_path = format!("inputs/day{}/input.txt", day);
+    let test_input_path = format!("inputs/day{}/input.test", day);
 
     let tokens = quote! {
         use crate::solutions::utils::read_input;

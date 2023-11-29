@@ -1,5 +1,5 @@
-use clap::{Parser, Subcommand};
 use anyhow::Result;
+use clap::{Parser, Subcommand};
 
 mod prepare;
 mod solutions;
@@ -9,15 +9,14 @@ mod solutions;
 #[command(author, version, about, long_about = None)]
 struct Options {
     #[command(subcommand)]
-    command: Command
+    command: Command,
 }
 
 #[derive(Subcommand, Debug)]
 enum Command {
     Prepare(prepare::PrepareCommandOptions),
-    Run(solutions::RunCommandOptions)
+    Run(solutions::RunCommandOptions),
 }
-
 
 fn main() -> Result<()> {
     let options = Options::parse();

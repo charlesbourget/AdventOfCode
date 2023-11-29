@@ -1,5 +1,5 @@
-use clap::{ValueEnum, arg, Args};
 use anyhow::Result;
+use clap::{arg, Args, ValueEnum};
 
 #[allow(dead_code)]
 mod utils;

@@ -1,7 +1,7 @@
-use std::{default, process, io};
+use std::{default, io, process};
 
-use serde::{Serialize, Deserialize};
 use anyhow::Result;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
@@ -10,7 +10,11 @@ pub struct Config {
 
 /// `MyConfig` implements `Default`
 impl default::Default for Config {
-    fn default() -> Self { Self { session: ask_session() } }
+    fn default() -> Self {
+        Self {
+            session: ask_session(),
+        }
+    }
 }
 
 pub fn load_config() -> Result<Config> {

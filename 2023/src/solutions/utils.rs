@@ -1,11 +1,15 @@
-use std::{path::Path, fs::File, io::{BufReader, BufRead}};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+    path::Path,
+};
 
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 
 pub fn read_input(filename: impl AsRef<Path>) -> Result<Vec<String>> {
     let file = File::open(filename).context("Unable to open input file")?;
     let buf = BufReader::new(file);
-    let lines = buf.lines().collect::<Result<Vec<String>,_>>()?;
+    let lines = buf.lines().collect::<Result<Vec<String>, _>>()?;
 
     Ok(lines)
 }
@@ -13,7 +17,8 @@ pub fn read_input(filename: impl AsRef<Path>) -> Result<Vec<String>> {
 pub fn read_input_i32(filename: impl AsRef<Path>) -> Result<Vec<i32>> {
     let lines = read_input(filename)?;
 
-    let parsed_lines = lines.iter()
+    let parsed_lines = lines
+        .iter()
         .map(|line| line.parse::<i32>())
         .collect::<Result<Vec<i32>, _>>()?;
 
