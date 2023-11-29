@@ -1,0 +1,16 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Charles Bourget"]
+
+[dependencies]
+anyhow = "1.0.75"
+clap = { version = "4.4.10", features = ["derive"] }
+confy = "0.5.1"
+http = "1.0.0"
+prettyplease = "0.2.15"
+quote = "1.0.33"
+reqwest = { version = "0.11.22", features = ["blocking"] }
+serde = { version = "1.0.193", features = ["derive"] }
+syn = "2.0.39"
