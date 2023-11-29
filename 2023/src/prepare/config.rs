@@ -8,7 +8,6 @@ pub struct Config {
     pub session: String,
 }
 
-/// `MyConfig` implements `Default`
 impl default::Default for Config {
     fn default() -> Self {
         Self {

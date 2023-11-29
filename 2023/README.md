@@ -1,7 +1,7 @@
-# ⭐️ Advent of Code 2022 ⭐️
+# ⭐️ Advent of Code 2023 ⭐️
 [![Stars collected](https://shields.io/static/v1?label=stars%20collected&message=0%20⭐&color=blue)]()
 
-My solutions for AOC 2022.
+My solutions for AOC 2023.
 
 ## How to run
 
