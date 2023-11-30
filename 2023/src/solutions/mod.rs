@@ -4,6 +4,10 @@ use clap::{arg, Args, ValueEnum};
 #[allow(dead_code)]
 mod utils;
 
+const fn day_range() -> std::ops::RangeInclusive<u8> {
+    1..=25
+}
+
 #[derive(Args, Debug)]
 pub struct RunCommandOptions {
     /// Day to run
@@ -21,15 +25,30 @@ pub struct RunCommandOptions {
 #[derive(ValueEnum, Debug, Clone, Copy)]
 pub enum Parts {
     Both,
-    Part1,
-    Part2,
+    One,
+    Two,
 }
 
 pub fn run(options: RunCommandOptions) {
-    // TODO: Implement all
+    if options.all {
+        for day in day_range() {
+            run_specified_day(day);
+        }
+    } else {
+        let day = match options.day {
+            Some(day) => day,
+            None => {
+                eprintln!("Please specify a day to run");
+                return;
+            }
+        };
 
-    let day = options.day.unwrap();
+        run_specified_day(day);
+    }
 
+}
+
+fn run_specified_day(day: u8) {
     let result: Result<()> = match day {
         _ => {
             eprintln!("Day {} not implemented yet", day);

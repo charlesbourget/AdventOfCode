@@ -2,6 +2,7 @@ use std::{fs, io::Write};
 
 use anyhow::Result;
 use clap::Args;
+use reqwest::header::COOKIE;
 
 use self::template::generate_template;
 
@@ -45,13 +46,14 @@ pub fn prepare(options: PrepareCommandOptions) -> Result<()> {
 }
 
 fn fetch_input(day: u8, session_token: &str) -> Result<String> {
-    let url = format!("https://adventofcode.com/2022/day/{}/input", day);
+    let url = format!("https://adventofcode.com/2023/day/{}/input", day);
+    let cookie_header = format!("session={}", session_token.trim());
 
     let client = reqwest::blocking::Client::new();
     let res = client
         .get(url)
-        .header("Cookie", format!("session={}", session_token))
-        .send()?;
+        .header(COOKIE, cookie_header)
+        .send().unwrap();
 
     let input = res.text()?;
 

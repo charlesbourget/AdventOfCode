@@ -14,8 +14,12 @@ pub fn generate_template(day: &str) -> Result<String> {
             let lines = read_input(#input_path)?;
 
             match parts {
-                Parts::One => part_1(&lines)?,
-                Parts::Two => part_2(&lines)?,
+                Parts::One => {
+                    part_1(&lines)?;
+                }
+                Parts::Two => {
+                    part_2(&lines)?;
+                },
                 Parts::Both => {
                     part_1(&lines)?;
                     part_2(&lines)?;
@@ -25,33 +29,27 @@ pub fn generate_template(day: &str) -> Result<String> {
             Ok(())
         }
 
-        fn part_1(input: &[String]) -> Result<()> {
+        fn part_1(input: &[String]) -> Result<i32> {
             let response = 0;
 
             println!("Part 1: {}", response);
-
-            Ok(())
+            Ok(response)
         }
 
-        fn part_2(input: &[String]) -> Result<()> {
+        fn part_2(input: &[String]) -> Result<i32> {
             let response = 0;
-
             println!("Part 2: {}", response);
-
-            Ok(())
+            Ok(response)
         }
 
         #[cfg(test)]
         mod tests {
             use super::*;
-
             #[test]
             fn part_1_test() {
                 let test_input = read_input(#test_input_path).unwrap();
                 let expected_result = 0;
-
                 let result = part_1(&test_input).unwrap();
-
                 assert_eq!(expected_result, result);
             }
 
@@ -59,9 +57,7 @@ pub fn generate_template(day: &str) -> Result<String> {
             fn part_2_test() {
                 let test_input = read_input(#test_input_path).unwrap();
                 let expected_result = 0;
-
                 let result = part_2(&test_input).unwrap();
-
                 assert_eq!(expected_result, result);
             }
         }
