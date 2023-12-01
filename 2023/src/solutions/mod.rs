@@ -3,6 +3,7 @@ use clap::{arg, Args, ValueEnum};
 
 #[allow(dead_code)]
 mod utils;
+mod day01;
 
 const fn day_range() -> std::ops::RangeInclusive<u8> {
     1..=25
@@ -32,7 +33,7 @@ pub enum Parts {
 pub fn run(options: RunCommandOptions) {
     if options.all {
         for day in day_range() {
-            run_specified_day(day);
+            run_specified_day(day, options.parts);
         }
     } else {
         let day = match options.day {
@@ -43,13 +44,14 @@ pub fn run(options: RunCommandOptions) {
             }
         };
 
-        run_specified_day(day);
+        run_specified_day(day, options.parts);
     }
 
 }
 
-fn run_specified_day(day: u8) {
+fn run_specified_day(day: u8, parts: Parts) {
     let result: Result<()> = match day {
+        1 => day01::run(parts),
         _ => {
             eprintln!("Day {} not implemented yet", day);
 
