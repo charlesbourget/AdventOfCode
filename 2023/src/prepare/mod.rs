@@ -53,7 +53,8 @@ fn fetch_input(day: u8, session_token: &str) -> Result<String> {
     let res = client
         .get(url)
         .header(COOKIE, cookie_header)
-        .send().unwrap();
+        .send()
+        .unwrap();
 
     let input = res.text()?;
 

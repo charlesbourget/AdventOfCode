@@ -24,3 +24,11 @@ pub fn read_input_i32(filename: impl AsRef<Path>) -> Result<Vec<i32>> {
 
     Ok(parsed_lines)
 }
+
+pub fn split_into_tuple(input: &str, separator: &str) -> (String, String) {
+    let mut bounds = input.split(separator);
+    let lower_bound = bounds.next().unwrap();
+    let upper_bound = bounds.next().unwrap();
+
+    (lower_bound.to_owned(), upper_bound.to_owned())
+}

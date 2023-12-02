@@ -23,7 +23,8 @@ pub fn run(parts: Parts) -> Result<()> {
 fn part_1(input: &[String]) -> Result<i32> {
     let re = Regex::new(r"[A-Za-z]").unwrap();
 
-    let response = input.iter()
+    let response = input
+        .iter()
         .map(|line| re.replace_all(line, "").to_string())
         .map(|line| get_digits(&line))
         .map(|line| line.parse::<i32>().unwrap())
@@ -36,7 +37,8 @@ fn part_1(input: &[String]) -> Result<i32> {
 fn part_2(input: &[String]) -> Result<i32> {
     let re = Regex::new(r"[A-Za-z]").unwrap();
 
-    let response = input.iter()
+    let response = input
+        .iter()
         // Would've prefered to use regex but regex::Regex does not allow overlapping capture groups
         .map(|line| {
             line.replace("one", "o1e")
