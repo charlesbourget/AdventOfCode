@@ -3,6 +3,7 @@ use clap::{arg, Args, ValueEnum};
 
 mod day01;
 mod day02;
+mod day03;
 #[allow(dead_code)]
 mod utils;
 
@@ -53,6 +54,7 @@ fn run_specified_day(day: u8, parts: Parts) {
     let result: Result<()> = match day {
         1 => day01::run(parts),
         2 => day02::run(parts),
+        3 => day03::run(parts),
         _ => {
             eprintln!("Day {} not implemented yet", day);
 
