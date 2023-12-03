@@ -6,6 +6,18 @@ const MAX_RED: u8 = 12;
 const MAX_GREEN: u8 = 13;
 const MAX_BLUE: u8 = 14;
 
+struct Game {
+    index: i32,
+    sets: Vec<Set>,
+}
+
+struct Set {
+    red: u8,
+    green: u8,
+    blue: u8,
+    valid: bool,
+}
+
 pub fn run(parts: Parts) -> Result<()> {
     let lines = read_input("inputs/day02/input.txt")?;
     match parts {
@@ -24,84 +36,82 @@ pub fn run(parts: Parts) -> Result<()> {
 }
 
 fn part_1(input: &[String]) -> Result<i32> {
-    let response = input.iter().map(|line| parse_line(line)).sum();
+    let response = input
+        .iter()
+        .map(|line| Game::new(line))
+        .filter(|game| game.sets.iter().all(|set| set.valid))
+        .map(|game| game.index)
+        .sum();
+
     println!("Part 1: {}", response);
     Ok(response)
 }
 
 fn part_2(input: &[String]) -> Result<i32> {
-    let response = input.iter().map(|line| parse_line_2(line)).sum();
+    let response = input
+        .iter()
+        .map(|line| Game::new(line))
+        .map(|game| game.find_min_color())
+        .sum();
+
     println!("Part 2: {}", response);
     Ok(response)
 }
 
-fn parse_line(line: &str) -> i32 {
-    let (game, rest) = split_into_tuple(line, ": ");
-    let index = split_into_tuple(&game, " ").1;
+impl Game {
+    fn new(line: &str) -> Self {
+        let (game, rest) = split_into_tuple(line, ": ");
+        let index = split_into_tuple(&game, " ").1;
 
-    let result = rest.split("; ").map(is_valid_set).all(|all| all);
+        let sets = rest.split("; ").map(Set::new).collect();
 
-    if result {
-        index.parse().unwrap()
-    } else {
-        0
+        Self {
+            index: index.parse().unwrap(),
+            sets,
+        }
+    }
+
+    fn find_min_color(&self) -> i32 {
+        let mut max_red: i32 = 0;
+        let mut max_green: i32 = 0;
+        let mut max_blue: i32 = 0;
+
+        self.sets.iter().for_each(|set| {
+            max_red = max_red.max(set.red.into());
+            max_green = max_green.max(set.green.into());
+            max_blue = max_blue.max(set.blue.into());
+        });
+
+        max_red * max_green * max_blue
     }
 }
 
-fn is_valid_set(set: &str) -> bool {
-    let mut red = 0;
-    let mut green = 0;
-    let mut blue = 0;
+impl Set {
+    fn new(line: &str) -> Self {
+        let mut red = 0;
+        let mut green = 0;
+        let mut blue = 0;
 
-    set.split(", ").for_each(|subset| {
-        let (number, color) = split_into_tuple(subset, " ");
+        line.split(", ").for_each(|subset| {
+            let (number, color) = split_into_tuple(subset, " ");
 
-        match color.as_str() {
-            "red" => red += number.parse::<u8>().unwrap(),
-            "green" => green += number.parse::<u8>().unwrap(),
-            "blue" => blue += number.parse::<u8>().unwrap(),
-            _ => panic!("Unexpected color"),
-        }
-    });
-
-    red <= MAX_RED && green <= MAX_GREEN && blue <= MAX_BLUE
-}
-
-fn parse_line_2(line: &str) -> i32 {
-    let mut max_red = 0;
-    let mut max_green = 0;
-    let mut max_blue = 0;
-
-    split_into_tuple(line, ": ")
-        .1
-        .split("; ")
-        .map(count_color)
-        .for_each(|(red, green, blue)| {
-            max_red = max_red.max(red);
-            max_green = max_green.max(green);
-            max_blue = max_blue.max(blue);
+            match color.as_str() {
+                "red" => red += number.parse::<u8>().unwrap(),
+                "green" => green += number.parse::<u8>().unwrap(),
+                "blue" => blue += number.parse::<u8>().unwrap(),
+                _ => panic!("Unexpected color"),
+            }
         });
 
-    max_red * max_green * max_blue
-}
+        let valid = red <= MAX_RED && green <= MAX_GREEN && blue <= MAX_BLUE;
 
-fn count_color(set: &str) -> (i32, i32, i32) {
-    let mut red = 0;
-    let mut green = 0;
-    let mut blue = 0;
-
-    set.split(", ").for_each(|subset| {
-        let (number, color) = split_into_tuple(subset, " ");
-
-        match color.as_str() {
-            "red" => red += number.parse::<i32>().unwrap(),
-            "green" => green += number.parse::<i32>().unwrap(),
-            "blue" => blue += number.parse::<i32>().unwrap(),
-            _ => panic!("Unexpected color"),
+        Self {
+            red,
+            green,
+            blue,
+            valid,
         }
-    });
-
-    (red, green, blue)
+    }
 }
 
 #[cfg(test)]
