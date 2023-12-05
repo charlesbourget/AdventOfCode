@@ -23,20 +23,15 @@ fn part_1(input: &[String]) -> Result<i64> {
     let input_map = parse_input(input);
     let mut response = 0;
 
-    for (i, line) in input_map
-        .iter()
-        .skip(1)
-        .take(input_map.len() - 2)
-        .enumerate()
-    {
+    for (i, line) in input_map.iter().enumerate() {
         let mut current_num: Vec<char> = Vec::new();
         let mut counts = false;
 
-        for (j, char) in line.iter().skip(1).enumerate() {
+        for (j, char) in line.iter().enumerate() {
             if char.is_ascii_digit() {
                 // We have a number, add to list and check if it touches a symbol
                 current_num.push(*char);
-                counts |= touches_symbol(i + 1, j + 1, &input_map);
+                counts |= touches_symbol(i, j, &input_map);
             } else {
                 // We have either a symbol or a dot
                 if !current_num.is_empty() && counts {
@@ -74,57 +69,55 @@ fn part_2(input: &[String]) -> Result<i32> {
     let input_map = parse_input(input);
     let mut response = 0;
 
-    for (i, line) in input_map
-        .iter()
-        .skip(1)
-        .take(input_map.len() - 2)
-        .enumerate()
-    {
-        let y = i + 1;
-
-        for (j, char) in line.iter().skip(1).enumerate() {
-            let x = j + 1;
+    for (i, line) in input_map.iter().enumerate() {
+        for (j, char) in line.iter().enumerate() {
             let mut numbers: Vec<i32> = Vec::new();
             if *char == '*' {
-                if input_map[y][x - 1].is_ascii_digit() {
-                    numbers.push(consume_left(&input_map, y, x));
+                // Check every direction for a number;
+                // Once we find one, consume it all
+
+                // Left
+                if input_map[i][j - 1].is_ascii_digit() {
+                    numbers.push(consume_left(&input_map, i, j));
                 }
 
-                if input_map[y][x + 1].is_ascii_digit() {
-                    numbers.push(consume_right(&input_map, y, x + 1));
+                // Right
+                if input_map[i][j + 1].is_ascii_digit() {
+                    numbers.push(consume_right(&input_map, i, j + 1));
                 }
 
-                if input_map[y - 1][x].is_ascii_digit() {
-                    numbers.push(consume_both_ways(&input_map, y - 1, x))
+                // Up, special case, check in both directions. We are maybe in the middle of a number
+                if input_map[i - 1][j].is_ascii_digit() {
+                    numbers.push(consume_both_ways(&input_map, i - 1, j))
                 } else {
-                    if input_map[y - 1][x - 1].is_ascii_digit() {
-                        numbers.push(consume_left(&input_map, y - 1, x));
+                    // Upper left corner
+                    if input_map[i - 1][j - 1].is_ascii_digit() {
+                        numbers.push(consume_left(&input_map, i - 1, j));
                     }
 
-                    if input_map[y - 1][x + 1].is_ascii_digit() {
-                        numbers.push(consume_right(&input_map, y - 1, x + 1));
+                    // Upper right corner
+                    if input_map[i - 1][j + 1].is_ascii_digit() {
+                        numbers.push(consume_right(&input_map, i - 1, j + 1));
                     }
                 }
 
-                if input_map[y + 1][x].is_ascii_digit() {
-                    numbers.push(consume_both_ways(&input_map, y + 1, x))
+                // Down, special case, check in both directions. We are maybe in the middle of a number
+                if input_map[i + 1][j].is_ascii_digit() {
+                    numbers.push(consume_both_ways(&input_map, i + 1, j))
                 } else {
-                    if input_map[y + 1][x - 1].is_ascii_digit() {
-                        numbers.push(consume_left(&input_map, y + 1, x));
+                    // Lower left corner
+                    if input_map[i + 1][j - 1].is_ascii_digit() {
+                        numbers.push(consume_left(&input_map, i + 1, j));
                     }
 
-                    if input_map[y + 1][x + 1].is_ascii_digit() {
-                        numbers.push(consume_right(&input_map, y + 1, x + 1));
+                    // Lower right corner
+                    if input_map[i + 1][j + 1].is_ascii_digit() {
+                        numbers.push(consume_right(&input_map, i + 1, j + 1));
                     }
                 }
 
+                // Only add if we have 2 numbers
                 if numbers.len() == 2 {
-                    println!(
-                        "{} * {} = {}",
-                        numbers[0],
-                        numbers[1],
-                        numbers[0] * numbers[1]
-                    );
                     response += numbers[0] * numbers[1];
                 }
             }
