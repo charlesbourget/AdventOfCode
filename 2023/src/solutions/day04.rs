@@ -1,13 +1,16 @@
 use std::collections::HashSet;
 
-use crate::solutions::utils::read_input;
 use crate::solutions::Parts;
 use anyhow::Result;
 
+use super::utils::read_input_str;
 use super::utils::split_into_tuple;
 
+const INPUT: &str = include_str!("../../inputs/day04/input.txt");
+
 pub fn run(parts: Parts) -> Result<()> {
-    let lines = read_input("inputs/day04/input.txt")?;
+    println!("Day 04");
+    let lines = read_input_str(INPUT);
 
     match parts {
         Parts::One => {
@@ -31,7 +34,7 @@ fn part_1(input: &[String]) -> Result<i32> {
         .map(|x| x.0.intersection(&x.1).count())
         .fold(0, |acc, x| acc + score_from_count(x));
 
-    println!("Part 1: {}", response);
+    println!("\tPart 1: {}", response);
     Ok(response)
 }
 
@@ -56,7 +59,7 @@ fn part_2(input: &[String]) -> Result<i32> {
 
     let response = count.iter().sum();
 
-    println!("Part 2: {}", response);
+    println!("\tPart 2: {}", response);
     Ok(response)
 }
 
@@ -87,7 +90,13 @@ fn score_from_count(count: usize) -> i32 {
 
 #[cfg(test)]
 mod tests {
+    extern crate test;
+
+    use crate::solutions::utils::read_input;
+    use test::Bencher;
+
     use super::*;
+
     #[test]
     fn part_1_test() {
         let test_input = read_input("inputs/day04/input.test").unwrap();
@@ -102,5 +111,19 @@ mod tests {
         let expected_result = 30;
         let result = part_2(&test_input).unwrap();
         assert_eq!(expected_result, result);
+    }
+
+    #[bench]
+    fn part_1_bench(b: &mut Bencher) {
+        let lines = read_input_str(INPUT);
+
+        b.iter(|| part_1(&lines));
+    }
+
+    #[bench]
+    fn part_2_bench(b: &mut Bencher) {
+        let lines = read_input_str(INPUT);
+
+        b.iter(|| part_2(&lines));
     }
 }

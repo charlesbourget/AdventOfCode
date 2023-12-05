@@ -14,6 +14,10 @@ pub fn read_input(filename: impl AsRef<Path>) -> Result<Vec<String>> {
     Ok(lines)
 }
 
+pub fn read_input_str(input: &str) -> Vec<String> {
+    input.lines().map(|line| line.to_string()).collect()
+}
+
 pub fn read_input_i32(filename: impl AsRef<Path>) -> Result<Vec<i32>> {
     let lines = read_input(filename)?;
 

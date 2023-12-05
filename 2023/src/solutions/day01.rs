@@ -1,10 +1,15 @@
-use crate::solutions::utils::read_input;
 use crate::solutions::Parts;
 use anyhow::Result;
 use regex::Regex;
 
+use super::utils::read_input_str;
+
+const INPUT: &str = include_str!("../../inputs/day01/input.txt");
+
 pub fn run(parts: Parts) -> Result<()> {
-    let lines = read_input("inputs/day01/input.txt")?;
+    println!("Day 01");
+    let lines = read_input_str(INPUT);
+
     match parts {
         Parts::One => {
             part_1(&lines)?;
@@ -30,7 +35,7 @@ fn part_1(input: &[String]) -> Result<i32> {
         .map(|line| line.parse::<i32>().unwrap())
         .sum();
 
-    println!("Part 1: {}", response);
+    println!("\tPart 1: {}", response);
     Ok(response)
 }
 
@@ -57,7 +62,7 @@ fn part_2(input: &[String]) -> Result<i32> {
         .map(|line| line.parse::<i32>().unwrap())
         .sum();
 
-    println!("Part 2: {}", response);
+    println!("\tPart 2: {}", response);
     Ok(response)
 }
 
@@ -72,6 +77,10 @@ fn get_digits(line: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    extern crate test;
+    use crate::solutions::utils::read_input;
+    use test::Bencher;
+
     use super::*;
 
     #[test]
@@ -88,5 +97,19 @@ mod tests {
         let expected_result = 281;
         let result = part_2(&test_input).unwrap();
         assert_eq!(expected_result, result);
+    }
+
+    #[bench]
+    fn part_1_bench(b: &mut Bencher) {
+        let lines = read_input_str(INPUT);
+
+        b.iter(|| part_1(&lines));
+    }
+
+    #[bench]
+    fn part_2_bench(b: &mut Bencher) {
+        let lines = read_input_str(INPUT);
+
+        b.iter(|| part_2(&lines));
     }
 }

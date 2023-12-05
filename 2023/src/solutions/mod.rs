@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use anyhow::Result;
 use clap::{arg, Args, ValueEnum};
 
@@ -8,8 +10,8 @@ mod day04;
 #[allow(dead_code)]
 mod utils;
 
-const fn day_range() -> std::ops::RangeInclusive<u8> {
-    1..=25
+const fn day_range() -> RangeInclusive<u8> {
+    1..=4
 }
 
 #[derive(Args, Debug)]
