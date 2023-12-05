@@ -23,12 +23,17 @@ fn part_1(input: &[String]) -> Result<i64> {
     let input_map = parse_input(input);
     let mut response = 0;
 
-    for (i, line) in input_map.iter().skip(1).take(input_map.len() - 2).enumerate() {
+    for (i, line) in input_map
+        .iter()
+        .skip(1)
+        .take(input_map.len() - 2)
+        .enumerate()
+    {
         let mut current_num: Vec<char> = Vec::new();
         let mut counts = false;
 
         for (j, char) in line.iter().skip(1).enumerate() {
-            if char.is_digit(10) {
+            if char.is_ascii_digit() {
                 // We have a number, add to list and check if it touches a symbol
                 current_num.push(*char);
                 counts |= touches_symbol(i + 1, j + 1, &input_map);
@@ -50,60 +55,76 @@ fn part_1(input: &[String]) -> Result<i64> {
     Ok(response)
 }
 
-fn touches_symbol(i: usize, j: usize, input_map: &Vec<Vec<char>>) -> bool {
-    is_symbol(input_map[i-1][j]) || is_symbol(input_map[i+1][j]) || is_symbol(input_map[i][j-1]) || is_symbol(input_map[i][j+1]) ||
-    is_symbol(input_map[i-1][j-1]) || is_symbol(input_map[i-1][j+1]) || is_symbol(input_map[i+1][j-1]) || is_symbol(input_map[i+1][j+1])
+fn touches_symbol(i: usize, j: usize, input_map: &[Vec<char>]) -> bool {
+    is_symbol(input_map[i - 1][j])
+        || is_symbol(input_map[i + 1][j])
+        || is_symbol(input_map[i][j - 1])
+        || is_symbol(input_map[i][j + 1])
+        || is_symbol(input_map[i - 1][j - 1])
+        || is_symbol(input_map[i - 1][j + 1])
+        || is_symbol(input_map[i + 1][j - 1])
+        || is_symbol(input_map[i + 1][j + 1])
 }
 
 fn is_symbol(c: char) -> bool {
-    !c.is_digit(10) && c != '.'
+    !c.is_ascii_digit() && c != '.'
 }
 
 fn part_2(input: &[String]) -> Result<i32> {
     let input_map = parse_input(input);
     let mut response = 0;
 
-    for (i, line) in input_map.iter().skip(1).take(input_map.len() - 2).enumerate() {
+    for (i, line) in input_map
+        .iter()
+        .skip(1)
+        .take(input_map.len() - 2)
+        .enumerate()
+    {
         let y = i + 1;
 
         for (j, char) in line.iter().skip(1).enumerate() {
             let x = j + 1;
             let mut numbers: Vec<i32> = Vec::new();
             if *char == '*' {
-                if input_map[y][x-1].is_digit(10) {
+                if input_map[y][x - 1].is_ascii_digit() {
                     numbers.push(consume_left(&input_map, y, x));
                 }
 
-                if input_map[y][x+1].is_digit(10) {
-                    numbers.push(consume_right(&input_map, y, x+1));
+                if input_map[y][x + 1].is_ascii_digit() {
+                    numbers.push(consume_right(&input_map, y, x + 1));
                 }
 
-                if input_map[y-1][x].is_digit(10) {
-                    numbers.push(consume_both_ways(&input_map, y-1, x))
+                if input_map[y - 1][x].is_ascii_digit() {
+                    numbers.push(consume_both_ways(&input_map, y - 1, x))
                 } else {
-                    if input_map[y-1][x-1].is_digit(10) {
-                        numbers.push(consume_left(&input_map, y-1, x));
+                    if input_map[y - 1][x - 1].is_ascii_digit() {
+                        numbers.push(consume_left(&input_map, y - 1, x));
                     }
 
-                    if input_map[y-1][x+1].is_digit(10) {
-                        numbers.push(consume_right(&input_map, y-1, x+1));
+                    if input_map[y - 1][x + 1].is_ascii_digit() {
+                        numbers.push(consume_right(&input_map, y - 1, x + 1));
                     }
                 }
 
-                if input_map[y+1][x].is_digit(10) {
-                    numbers.push(consume_both_ways(&input_map, y+1, x))
+                if input_map[y + 1][x].is_ascii_digit() {
+                    numbers.push(consume_both_ways(&input_map, y + 1, x))
                 } else {
-                    if input_map[y+1][x-1].is_digit(10) {
-                        numbers.push(consume_left(&input_map, y+1, x));
+                    if input_map[y + 1][x - 1].is_ascii_digit() {
+                        numbers.push(consume_left(&input_map, y + 1, x));
                     }
 
-                    if input_map[y+1][x+1].is_digit(10) {
-                        numbers.push(consume_right(&input_map, y+1, x+1));
+                    if input_map[y + 1][x + 1].is_ascii_digit() {
+                        numbers.push(consume_right(&input_map, y + 1, x + 1));
                     }
                 }
 
                 if numbers.len() == 2 {
-                    println!("{} * {} = {}", numbers[0], numbers[1], numbers[0] * numbers[1]);
+                    println!(
+                        "{} * {} = {}",
+                        numbers[0],
+                        numbers[1],
+                        numbers[0] * numbers[1]
+                    );
                     response += numbers[0] * numbers[1];
                 }
             }
@@ -114,39 +135,48 @@ fn part_2(input: &[String]) -> Result<i32> {
     Ok(response)
 }
 
-fn consume_left(input_map: &Vec<Vec<char>>, start_y: usize, start_x: usize) -> i32 {
+fn consume_left(input_map: &[Vec<char>], start_y: usize, start_x: usize) -> i32 {
     let mut current_number: Vec<char> = Vec::new();
 
     for j in (0..start_x).rev() {
-        if input_map[start_y][j].is_digit(10) {
+        if input_map[start_y][j].is_ascii_digit() {
             current_number.push(input_map[start_y][j]);
         } else {
             break;
         }
     }
 
-    current_number.iter().rev().collect::<String>().parse::<i32>().unwrap()
+    current_number
+        .iter()
+        .rev()
+        .collect::<String>()
+        .parse::<i32>()
+        .unwrap()
 }
 
-fn consume_right(input_map: &Vec<Vec<char>>, start_y: usize, start_x: usize) -> i32 {
+fn consume_right(input_map: &[Vec<char>], start_y: usize, start_x: usize) -> i32 {
     let mut current_number: Vec<char> = Vec::new();
 
     for j in start_x..input_map[start_y].len() {
-        if input_map[start_y][j].is_digit(10) {
+        if input_map[start_y][j].is_ascii_digit() {
             current_number.push(input_map[start_y][j]);
         } else {
             break;
         }
     }
 
-    current_number.iter().collect::<String>().parse::<i32>().unwrap()
+    current_number
+        .iter()
+        .collect::<String>()
+        .parse::<i32>()
+        .unwrap()
 }
 
-fn consume_both_ways(input_map: &Vec<Vec<char>>, start_y: usize, start_x: usize) -> i32{
+fn consume_both_ways(input_map: &[Vec<char>], start_y: usize, start_x: usize) -> i32 {
     let mut current_number: Vec<char> = Vec::new();
 
     for j in (0..start_x).rev() {
-        if input_map[start_y][j].is_digit(10) {
+        if input_map[start_y][j].is_ascii_digit() {
             current_number.push(input_map[start_y][j]);
         } else {
             break;
@@ -156,14 +186,18 @@ fn consume_both_ways(input_map: &Vec<Vec<char>>, start_y: usize, start_x: usize)
     current_number.reverse();
 
     for j in start_x..input_map[start_y].len() {
-        if input_map[start_y][j].is_digit(10) {
+        if input_map[start_y][j].is_ascii_digit() {
             current_number.push(input_map[start_y][j]);
         } else {
             break;
         }
     }
 
-    current_number.iter().collect::<String>().parse::<i32>().unwrap()
+    current_number
+        .iter()
+        .collect::<String>()
+        .parse::<i32>()
+        .unwrap()
 }
 
 fn parse_input(input: &[String]) -> Vec<Vec<char>> {
