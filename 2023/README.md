@@ -29,6 +29,12 @@ Run tests:
 cargo test
 ```
 
+Run benchmarks:
+
+```bash
+cargo bench
+```
+
 Generate template and fetch input for a specific day:
 
 ```bash
