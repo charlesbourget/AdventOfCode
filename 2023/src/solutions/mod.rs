@@ -7,11 +7,12 @@ mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day06;
 #[allow(dead_code)]
 mod utils;
 
 const fn day_range() -> RangeInclusive<u8> {
-    1..=4
+    1..=6
 }
 
 #[derive(Args, Debug)]
@@ -59,6 +60,7 @@ fn run_specified_day(day: u8, parts: Parts) {
         2 => day02::run(parts),
         3 => day03::run(parts),
         4 => day04::run(parts),
+        6 => day06::run(parts),
         _ => {
             eprintln!("Day {} not implemented yet", day);
 
