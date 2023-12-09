@@ -27,7 +27,7 @@ pub fn run(parts: Parts) -> Result<()> {
 }
 
 fn part_1(input: &[String]) -> Result<i32> {
-    let response =  parse_input(input)
+    let response = parse_input(input)
         .iter()
         .map(find_optimal_time)
         .fold(1, |a, b| a * b as i32);

@@ -15,7 +15,7 @@ mod solutions;
 static STAR_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"message=\d*").unwrap());
 const README_FILE_PATH: &str = "./README.md";
 
-/// Simple program to greet a person
+/// 2023 Advent of Code runner
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Options {
@@ -25,8 +25,11 @@ struct Options {
 
 #[derive(Subcommand, Debug)]
 enum Command {
+    /// Prepare repo for a new day
     Prepare(prepare::PrepareCommandOptions),
+    /// Run solution(s)
     Run(solutions::RunCommandOptions),
+    /// Add star count to README
     AddStar(AddStarCommandOptions),
 }
 

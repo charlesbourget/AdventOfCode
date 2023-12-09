@@ -1,5 +1,3 @@
-use std::ops::RangeInclusive;
-
 use anyhow::Result;
 use clap::{arg, Args, ValueEnum};
 
@@ -8,12 +6,11 @@ mod day02;
 mod day03;
 mod day04;
 mod day06;
+mod day09;
 #[allow(dead_code)]
 mod utils;
 
-const fn day_range() -> RangeInclusive<u8> {
-    1..=6
-}
+static DAYS: &[u8] = &[1, 2, 3, 4, 6, 9];
 
 #[derive(Args, Debug)]
 pub struct RunCommandOptions {
@@ -25,6 +22,7 @@ pub struct RunCommandOptions {
     #[arg(short, long)]
     all: bool,
 
+    /// Which parts to run
     #[arg(short, long, value_enum, default_value_t = Parts::Both)]
     parts: Parts,
 }
@@ -38,8 +36,8 @@ pub enum Parts {
 
 pub fn run(options: RunCommandOptions) {
     if options.all {
-        for day in day_range() {
-            run_specified_day(day, options.parts);
+        for day in DAYS {
+            run_specified_day(*day, options.parts);
         }
     } else {
         let day = match options.day {
@@ -61,6 +59,7 @@ fn run_specified_day(day: u8, parts: Parts) {
         3 => day03::run(parts),
         4 => day04::run(parts),
         6 => day06::run(parts),
+        9 => day09::run(parts),
         _ => {
             eprintln!("Day {} not implemented yet", day);
 

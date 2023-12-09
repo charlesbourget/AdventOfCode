@@ -1,6 +1,6 @@
 # ⭐️ Advent of Code 2023 ⭐️
 
-[![Stars collected](https://shields.io/static/v1?label=stars%20collected&message=10%20⭐&color=blue)]()
+[![Stars collected](https://shields.io/static/v1?label=stars%20collected&message=12%20⭐&color=blue)]()
 
 My solutions for AOC 2023.
 
