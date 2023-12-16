@@ -7,10 +7,11 @@ mod day03;
 mod day04;
 mod day06;
 mod day09;
+mod day15;
 #[allow(dead_code)]
 mod utils;
 
-static DAYS: &[u8] = &[1, 2, 3, 4, 6, 9];
+static DAYS: &[u8] = &[1, 2, 3, 4, 6, 9, 15];
 
 #[derive(Args, Debug)]
 pub struct RunCommandOptions {
@@ -60,6 +61,7 @@ fn run_specified_day(day: u8, parts: Parts) {
         4 => day04::run(parts),
         6 => day06::run(parts),
         9 => day09::run(parts),
+        15 => day15::run(parts),
         _ => {
             eprintln!("Day {} not implemented yet", day);
 
