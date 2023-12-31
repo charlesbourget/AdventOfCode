@@ -30,7 +30,9 @@ main = run =<< execParser opts
         )
 
 run :: Aoc -> IO ()
-run (Aoc day)
-  | day == 1 = Day01.run
-  | day == 15 = Day15.run
-  | otherwise = error "Invalid day"
+run (Aoc day) = runDay day
+
+runDay :: Int -> IO ()
+runDay 1 = Day01.run
+runDay 15 = Day15.run
+runDay _ = error "Invalid day"
