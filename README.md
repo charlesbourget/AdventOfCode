@@ -23,3 +23,4 @@ My solutions for the advent of code yearly challenge. Tried it in different lang
 ## 2023
 
 - [Rust](./2023/)
+- [Haskell](./2023/haskell-aoc/)
