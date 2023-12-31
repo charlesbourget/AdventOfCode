@@ -1,4 +1,4 @@
-module Day01 where
+module Day01 (run, part1) where
 
 import Data.Char (digitToInt)
 import Input (readInput)
