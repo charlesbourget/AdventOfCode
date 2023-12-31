@@ -40,3 +40,7 @@ Generate template and fetch input for a specific day:
 ```bash
 cargo run -- prepare 1
 ```
+
+## Extras
+
+Tried some days in Haskell to practice [README](./haskell-aoc/README.md).
