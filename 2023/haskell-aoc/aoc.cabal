@@ -20,7 +20,8 @@ library aoc-lib
     build-depends:
         base ^>=4.17.2.0,
         split ^>=0.2.4,
-        text ^>=2
+        text ^>=2,
+        MissingH ^>=1.6.0.0
     default-language: Haskell2010
 
 executable aoc
