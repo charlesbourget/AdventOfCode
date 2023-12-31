@@ -1,13 +1,10 @@
 module Main where
 
-import Data.Char (ord)
-import Data.List (foldl')
-import Data.List.Split (splitOn)
 import qualified Day01
 import qualified Day15
 import Options.Applicative
 
-data Aoc = Aoc
+newtype Aoc = Aoc
   {day :: Int}
 
 aoc :: Parser Aoc

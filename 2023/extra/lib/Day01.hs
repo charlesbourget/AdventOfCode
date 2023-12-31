@@ -1,6 +1,6 @@
 module Day01 (run, part1) where
 
-import Data.Char (digitToInt)
+import Data.Char (digitToInt, isAlpha)
 import Input (readInput)
 
 run :: IO ()
@@ -17,7 +17,7 @@ part1 lines = sum $ map (getFirstAndLast . removeAlpha) lines
 removeAlpha :: String -> String
 removeAlpha = filter isNotAlpha
   where
-    isNotAlpha c = c `notElem` ['a' .. 'z']
+    isNotAlpha c = not $ isAlpha c
 
 getFirstAndLast :: [Char] -> Int
 getFirstAndLast [] = 0
